@@ -3,34 +3,31 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
+  int totalSeconds = 1500;
+  late Timer timer;
+
+  void onTick(Timer timer) {
+    setState(() {
+      totalSeconds = totalSeconds - 1;
+    });
+  }
+
+  void onStartPressed() {
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+      onTick,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    int totalSeconds = 1500;
-    late Timer timer;
-
-    void onTick(Timer timer) {
-      setState(() {
-        totalSeconds = totalSeconds - 1;
-      });
-    }
-
-    void onStartPressed() {
-      timer = Timer.periodic(
-        const Duration(seconds: 1),
-        onTick,
-      );
-    }
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
@@ -50,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Flexible(
-            flex: 2,
+            flex: 3,
             child: Center(
               child: IconButton(
-                onPressed: onStartPressed,
-                color: Theme.of(context).cardColor,
                 iconSize: 120,
+                color: Theme.of(context).cardColor,
+                onPressed: onStartPressed,
                 icon: const Icon(Icons.play_circle_outline),
               ),
             ),
@@ -74,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Pomodors',
+                          'Pomodoros',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
@@ -84,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           '0',
                           style: TextStyle(
-                            fontSize: 60,
+                            fontSize: 58,
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).textTheme.headline1!.color,
                           ),
@@ -95,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );
